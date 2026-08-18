@@ -321,15 +321,22 @@ def main():
         # La nota nombra SOLO las metricas que han saltado de verdad. Antes se
         # imprimia siempre, y luego explicaba las dos aunque solo saltara una:
         # las dos veces hablaba de avisos que no estaban en la pantalla.
+        # 🔴 La frase de aquí NO puede decir que eso sea normal. El aviso salta
+        # al 40%, y la tabla de calibración llama sanos a los lotes de 18 a 38%
+        # en el 4-grama y de ~34% en el cierre: cuando esta nota se ve, el lote
+        # YA está fuera de la banda buena. La versión anterior justificaba la
+        # normalidad citando un 25%, un valor en el que ni siquiera se imprime.
         motivos = []
         if frac_ci >= UMBRAL_AVISO:
-            motivos.append("un cierre es formulario por naturaleza")
+            motivos.append("el cierre pasa del ~34% de los lotes que se leen bien")
         if frac_in >= UMBRAL_AVISO:
-            motivos.append("un 4-grama repetido es lenguaje normal")
+            motivos.append("el 4-grama pasa del 38% y entra en la banda de los que colapsan")
         if motivos:
-            cabeza = ("El aviso de arriba es informativo" if len(motivos) == 1
-                      else "Los avisos de arriba son informativos")
-            print(f"  {cabeza}: {' y '.join(motivos)}.")
+            cabeza = ("El aviso de arriba no bloquea" if len(motivos) == 1
+                      else "Los avisos de arriba no bloquean")
+            print(f"  {cabeza}, y es a propósito: bloquear por tres métricas")
+            print(f"  convierte la alarma en ruido. Pero míralo, porque")
+            print(f"  {' y '.join(motivos)}.")
     else:
         print("  VEREDICTO PARCIAL: pasa el corte de apertura, pero SIN la prueba")
         print("  de pares de compañeros, que es la que más colapso destapa.")

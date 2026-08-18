@@ -51,6 +51,11 @@ MUTANTES = [
     # sobrevive, es que la suite ya no protege ese arreglo.
     ("la nota de avisos vuelve a imprimirse siempre",
      r"if motivos:", "if True:"),
+    # Deshace que la nota nombre SOLO lo que salta: la vuelve a explicar las dos
+    # metricas aunque solo una supere el umbral.
+    ("la nota vuelve a explicar las dos metricas siempre",
+     r"if frac_ci >= UMBRAL_AVISO:\n            motivos\.append",
+     "if True:\n            motivos.append"),
 ]
 
 

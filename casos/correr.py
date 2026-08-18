@@ -45,8 +45,25 @@ CASOS = [
         "exit": 0,
         "contiene": ["con la prueba de pares hecha"],
         # Un lote limpio NO puede hablar de avisos: no hay ninguno en pantalla.
-        # Sin este no_contiene, quitar la guarda de la nota pasaba los 16 casos.
-        "no_contiene": ["informativo", "informativos"],
+        # 🔴 Estas cadenas son el TEXTO REAL de la nota. Si se reescribe la nota
+        # hay que reescribirlas: una asercion que busca una frase que ya no
+        # existe pasa siempre y deja de proteger sin avisar. Paso una vez.
+        "no_contiene": ["no bloquea", "pasa del", "banda de los que colapsan"],
+    },
+    {
+        "nombre": "verde con UN aviso: la nota nombra solo el que saltó",
+        "porque": ("ningún otro lote llega al verde con un aviso saltado, así que "
+                   "la nota no se imprimía en toda la suite y se podía romper sin que nadie se enterara"),
+        "lote": "verde-con-aviso.csv",
+        "exit": 0,
+        "contiene": [
+            "con la prueba de pares hecha",
+            "El aviso de arriba no bloquea",          # singular: solo saltó uno
+            "el 4-grama pasa del 38%",                 # y nombra el que saltó
+        ],
+        # El cierre está en verde: la nota NO puede mencionarlo. Sin esto, se
+        # puede volver a explicar las dos métricas aunque solo salte una.
+        "no_contiene": ["el cierre pasa del", "lenguaje normal", "es formulario"],
     },
     {
         "nombre": "los pares bloquean aunque la apertura pase",

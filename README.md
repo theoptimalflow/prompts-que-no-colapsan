@@ -14,6 +14,8 @@ de lanzar.
 - **`references/reglas-de-escritura.md`**: las reglas de redacción que sobreviven a escala.
 - **`medir-colapso.py`**: lee tus mensajes ya generados y te dice si el lote colapsó, con
   umbrales calibrados sobre 296 mensajes reales.
+- **Dos lotes de ejemplo**, `ejemplo-lote.csv` (colapsado) y `ejemplo-lote-sano.csv`, para que
+  veas el 🔴 y el ✅ antes de medir nada tuyo.
 - **`SKILL.md`**: si usas Claude con skills, esto se instala como skill y te acompaña a
   escribir el prompt.
 
@@ -55,8 +57,18 @@ Corre el medidor sobre el lote de ejemplo, que viene colapsado a propósito:
 cd prompts-que-no-colapsan && python3 medir-colapso.py ejemplo-lote.csv
 ```
 
-Tiene que darte **APERTURA 80,0% 🔴 BLOQUEA**, veredicto NO LANZAR y código de salida 1. Si te
-da eso, funciona.
+Tiene que darte **APERTURA 80,0% 🔴 BLOQUEA**, veredicto NO LANZAR y código de salida 1.
+
+Y ahora el contrario, que viaja al lado y es el que te dice cómo se ve un lote bueno:
+
+```bash
+python3 medir-colapso.py ejemplo-lote-sano.csv
+```
+
+**APERTURA 10,0%**, veredicto verde y código de salida 0.
+
+Córrelos los dos antes de medir nada tuyo. Un medidor que solo has visto bloquear no te ha
+enseñado dónde está la frontera.
 
 Sobre tus mensajes de verdad, en CSV con una fila por mensaje:
 

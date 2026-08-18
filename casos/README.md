@@ -54,19 +54,28 @@ Tres reglas, las tres aprendidas a base de fallar:
 
 ## Que la suite tenga dientes
 
-Una suite que pasa a la primera no ha demostrado nada. Córrela contra una versión anterior y
-comprueba que **falla**:
+Una suite que pasa a la primera no ha demostrado nada. La pregunta no es si pasa: es **si se
+enteraría de que el medidor se ha roto**.
+
+Eso es lo que hace `mutantes.py`, y viaja con el repo:
 
 ```bash
-git show <commit>:artefactos/cap-04-prompts-que-no-colapsan/prompts-que-no-colapsan/medir-colapso.py > /tmp/viejo.py
+python3 casos/mutantes.py
 ```
 
-Medido el 17-ago-2026, con los 14 casos de hoy:
+Rompe el medidor de ocho formas distintas, una por una, y exige que la suite **falle** con cada
+una. Los ocho:
 
-| Versión | Fallan |
-|---|---|
-| `8ef8de0` | 12 de 14 |
-| `3327849` | 2 de 14 |
-| `f22f7ca` | 2 de 14 |
+| Qué se rompe |
+|---|
+| apertura sin descontar el saludo |
+| pares sin descontar el saludo |
+| el umbral de apertura nunca bloquea |
+| el umbral de apertura bloquea siempre |
+| la apertura mira 1 palabra en vez de 8 |
+| el n-grama interno pasa a 1 |
+| los pares de compañeros no se calculan |
+| no avisa con menos de 8 mensajes |
 
-Si una versión vieja los pasa todos, la suite no está comprobando lo que crees.
+Tiene que decir **8/8 muertos**. Si alguno sobrevive, hay un fallo que tus tests no verían, y lo
+que importa es cuál: el propio script te lo nombra.

@@ -206,9 +206,10 @@ def correr(caso):
 
 def aserciones_muertas():
     """🔴 Una aserción que busca una frase que el medidor ya no escribe NO FALLA
-    NUNCA: se queda en verde para siempre sin proteger nada. Ha pasado tres
-    veces, siempre al reescribir el texto que la aserción vigilaba, y siempre en
-    el mismo commit que lo reescribía.
+    NUNCA: se queda en verde para siempre sin proteger nada. Ha pasado dos
+    veces, las dos al reescribir el texto que la aserción vigilaba, y las dos en
+    el mismo commit que lo reescribía. (Hubo una tercera, pero se cazó antes de
+    publicarse: el recuento son las que llegaron al lector.)
 
     Se comprueba contra el CÓDIGO FUENTE del medidor, no contra la salida de la
     suite, y la distinción importa: un `no_contiene` no aparece en la salida

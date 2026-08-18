@@ -318,8 +318,11 @@ def main():
             print("  la prueba de pares, el próximo verde no va a valer gran cosa.")
     elif pares_medido:
         print("  VEREDICTO: el lote pasa el corte, con la prueba de pares hecha.")
-        print("  Los avisos son informativos: un cierre es formulario por")
-        print("  naturaleza y un 4-grama repetido al 25% es lenguaje normal.")
+        # Solo si de verdad hay alguno. Antes se imprimia siempre, y en un lote
+        # limpio hablaba de avisos que no estaban en la pantalla.
+        if frac_ci >= UMBRAL_AVISO or frac_in >= UMBRAL_AVISO:
+            print("  Los avisos de arriba son informativos: un cierre es formulario")
+            print("  por naturaleza y un 4-grama repetido es lenguaje normal.")
     else:
         print("  VEREDICTO PARCIAL: pasa el corte de apertura, pero SIN la prueba")
         print("  de pares de compañeros, que es la que más colapso destapa.")

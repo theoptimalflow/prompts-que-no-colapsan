@@ -131,10 +131,12 @@ salida.
   distintas, la más común sale una vez y el resultado es 1/N, nunca cero. Con 10 mensajes el
   mínimo posible es 10%, con 27 es 3,7% y con 100 es 1%.
 
-  Lo que eso implica en la práctica: **un lote pequeño no puede alcanzar la banda del 1-5%** que
-  aparece más abajo como sana, por perfecto que sea. Si mides 12 mensajes y te sale 8,3%, ese
-  número no dice que tu lote esté algo repetido: dice que solo tienes 12 mensajes. Compara
-  siempre contra el suelo de tu propio tamaño antes de contra el umbral.
+  De ahí sale el tamaño mínimo para que el número signifique algo: **la banda del 1-5% que la
+  sección 4 llama sana solo es alcanzable a partir de unos 20 mensajes.** Por debajo, tu
+  resultado lo limita el tamaño y no la calidad del lote. Si mides 12 y te sale 8,3%, eso no
+  dice que esté algo repetido: dice que solo tienes 12 mensajes, y 8,3% es el suelo.
+
+  Compara siempre contra el suelo de tu propio tamaño antes que contra el umbral.
 - **Los umbrales están calibrados sobre campañas en español.** En otro idioma, con otro modelo
   o con otro formato de mensaje hay que volver a medir antes de fiarse del 15%.
 - **El recorte de saludo está afinado para saludos en español e inglés.** Si tus mensajes

@@ -44,7 +44,14 @@ Un caso es una entrada en la lista `CASOS` de `correr.py`, con su lote en `lotes
 
 Tres reglas, las tres aprendidas a base de fallar:
 
-1. **Añade el caso ANTES de dar el arreglo por bueno.** Si no, el arreglo se queda y la prueba
+1. 🔴 **Comprueba que la cadena que busca una aserción existe de verdad en alguna salida del
+medidor.** Una que no aparezca nunca no falla jamás: se queda en verde para siempre sin proteger
+nada, y no da ni un aviso. Ha pasado dos veces, las dos al reescribir el texto que la aserción
+vigilaba, y las dos veces en el mismo commit que lo reescribía. El barrido es mecánico: por cada
+cadena de `contiene` y `no_contiene`, búscala en los literales de `medir-colapso.py`. Si solo
+vive en un comentario, está muerta.
+
+**Añade el caso ANTES de dar el arreglo por bueno.** Si no, el arreglo se queda y la prueba
    no, que es exactamente cómo llegamos hasta aquí.
 2. **Añade también el caso contrario**, el que comprueba que no te has pasado de freno. La mitad
    de estos casos son de eso. Un arreglo que se niega a medir lotes sanos no es un arreglo.

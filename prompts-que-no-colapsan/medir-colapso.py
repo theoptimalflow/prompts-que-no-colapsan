@@ -330,13 +330,14 @@ def main():
         if frac_ci >= UMBRAL_AVISO:
             motivos.append("el cierre pasa del ~34% de los lotes que se leen bien")
         if frac_in >= UMBRAL_AVISO:
-            motivos.append("el 4-grama pasa del 38% y entra en la banda de los que colapsan")
+            motivos.append("el 4-grama pasa del 38%, el techo de los lotes sanos")
         if motivos:
             cabeza = ("El aviso de arriba no bloquea" if len(motivos) == 1
                       else "Los avisos de arriba no bloquean")
             print(f"  {cabeza}, y es a propósito: bloquear por tres métricas")
-            print(f"  convierte la alarma en ruido. Pero míralo, porque")
-            print(f"  {' y '.join(motivos)}.")
+            print(f"  convierte la alarma en ruido. Pero míralo:")
+            for m_ in motivos:                      # una línea por motivo: con dos,
+                print(f"    · {m_}.")               # encadenarlos con 'y' se leía fatal
     else:
         print("  VEREDICTO PARCIAL: pasa el corte de apertura, pero SIN la prueba")
         print("  de pares de compañeros, que es la que más colapso destapa.")

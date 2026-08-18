@@ -16,6 +16,7 @@ bueno**, y añade también el caso contrario: el que comprueba que no te has
 pasado de freno. La mitad de los fallos de este archivo son de eso.
 """
 
+import ast
 import subprocess
 import sys
 from pathlib import Path
@@ -48,7 +49,7 @@ CASOS = [
         # 🔴 Estas cadenas son el TEXTO REAL de la nota. Si se reescribe la nota
         # hay que reescribirlas: una asercion que busca una frase que ya no
         # existe pasa siempre y deja de proteger sin avisar. Paso una vez.
-        "no_contiene": ["no bloquea", "pasa del", "banda de los que colapsan"],
+        "no_contiene": ["no bloquea", "pasa del"],
     },
     {
         "nombre": "verde con UN aviso: la nota nombra solo el que saltó",
@@ -63,7 +64,7 @@ CASOS = [
         ],
         # El cierre está en verde: la nota NO puede mencionarlo. Sin esto, se
         # puede volver a explicar las dos métricas aunque solo salte una.
-        "no_contiene": ["el cierre pasa del", "lenguaje normal", "es formulario"],
+        "no_contiene": ["el cierre pasa del"],
     },
     {
         "nombre": "los pares bloquean aunque la apertura pase",
@@ -185,7 +186,7 @@ CASOS = [
 
 
 def correr(caso):
-    """Devuelve la lista de motivos por los que el caso falla. Vacía = pasa."""
+    """Devuelve (motivos de fallo, salida). Lista vacía = el caso pasa."""
     orden = [sys.executable, str(MEDIDOR), str(LOTES / caso["lote"])]
     orden += caso.get("flags", [])
     r = subprocess.run(orden, capture_output=True, text=True)
@@ -200,7 +201,32 @@ def correr(caso):
     for trozo in caso.get("no_contiene", []):
         if trozo in salida:
             fallos.append(f"dice «{trozo}» y no debería")
-    return fallos
+    return fallos, salida
+
+
+def aserciones_muertas():
+    """🔴 Una aserción que busca una frase que el medidor ya no escribe NO FALLA
+    NUNCA: se queda en verde para siempre sin proteger nada. Ha pasado tres
+    veces, siempre al reescribir el texto que la aserción vigilaba, y siempre en
+    el mismo commit que lo reescribía.
+
+    Se comprueba contra el CÓDIGO FUENTE del medidor, no contra la salida de la
+    suite, y la distinción importa: un `no_contiene` no aparece en la salida
+    normal, para eso está. Lo que sí tiene que poder hacer el medidor es
+    ESCRIBIRLO alguna vez, si no la aserción no vigila nada. Una cadena que solo
+    vive en un comentario también está muerta: por eso se leen los literales con
+    ast y no el fichero entero.
+    """
+    literales = " ".join(
+        n.value for n in ast.walk(ast.parse(MEDIDOR.read_text(encoding="utf-8")))
+        if isinstance(n, ast.Constant) and isinstance(n.value, str)
+    )
+    muertas = []
+    for caso in CASOS:
+        for trozo in caso.get("no_contiene", []):
+            if trozo not in literales:
+                muertas.append((caso["nombre"], trozo))
+    return muertas
 
 
 def main():
@@ -210,7 +236,7 @@ def main():
     print(f"\n  {len(CASOS)} casos contra {MEDIDOR.name}\n")
     rotos = []
     for caso in CASOS:
-        fallos = correr(caso)
+        fallos, _ = correr(caso)
         print(f"  {'✅' if not fallos else '❌'}  {caso['nombre']}")
         if fallos:
             rotos.append(caso)
@@ -219,10 +245,22 @@ def main():
             print(f"        este caso existe porque: {caso['porque']}")
 
     print()
-    if rotos:
-        print(f"  {len(rotos)} de {len(CASOS)} fallan.\n")
+    muertas = aserciones_muertas()
+    if muertas:
+        n = len(muertas)
+        print(f"  🔴 {n} asercion{'es' if n > 1 else ''} MUERTA{'S' if n > 1 else ''}: "
+              f"busca{'n' if n > 1 else ''} algo que el medidor")
+        print("     ya no escribe, así que no fallaría nunca.\n")
+        for nombre, trozo in muertas:
+            print(f"        «{trozo}»")
+            print(f"           en el no_contiene de: {nombre}")
+        print()
+
+    if rotos or muertas:
+        if rotos:
+            print(f"  {len(rotos)} de {len(CASOS)} fallan.\n")
         return 1
-    print(f"  Los {len(CASOS)} pasan.\n")
+    print(f"  Los {len(CASOS)} pasan, y ninguna aserción está muerta.\n")
     return 0
 
 

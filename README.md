@@ -57,18 +57,20 @@ Corre el medidor sobre el lote de ejemplo, que viene colapsado a propósito:
 cd prompts-que-no-colapsan && python3 medir-colapso.py ejemplo-lote.csv
 ```
 
-Tiene que darte **APERTURA 80,0% 🔴 BLOQUEA**, veredicto NO LANZAR y código de salida 1.
+Tiene que darte `APERTURA (8 primeras palabras) 80.0% 🔴 BLOQUEA`, veredicto NO LANZAR y código
+de salida 1.
 
-Y ahora el contrario, que viaja al lado y es el que te dice cómo se ve un lote bueno:
+Y ahora el contrario, que viaja al lado y es el que te enseña cómo se ve un lote bueno:
 
 ```bash
 python3 medir-colapso.py ejemplo-lote-sano.csv
 ```
 
-**APERTURA 10,0%**, veredicto verde y código de salida 0.
+Sobre 27 mensajes: `APERTURA 3.7% ✅ ok`, la prueba de pares hecha, veredicto verde y código de
+salida 0.
 
-Córrelos los dos antes de medir nada tuyo. Un medidor que solo has visto bloquear no te ha
-enseñado dónde está la frontera.
+Córrelos los dos antes de medir nada tuyo. **Un medidor que solo has visto bloquear no te ha
+enseñado dónde está la frontera.**
 
 Sobre tus mensajes de verdad, en CSV con una fila por mensaje:
 
@@ -97,7 +99,8 @@ lo mide igual. Y la cabecera del informe **te dice siempre sobre qué columnas h
 
 Mírala. Es la línea que te dice de un vistazo si has medido lo que creías.
 
-Un lote sano se va al 1-5% de apertura. Un lote roto se va al 26%, al 33% o al 95%.
+Un lote sano y **suficientemente grande** se va al 1-5% de apertura. Un lote roto se va al 26%,
+al 33% o al 95%. Ojo con el suelo de la sección 6 antes de comparar el tuyo con esa banda.
 
 ## 5. Modo de prueba y topes
 
@@ -123,6 +126,15 @@ salida.
 - **Con menos de 8 mensajes el porcentaje no significa nada.** Una muestra de 10 llegó a decir
   10-30% cuando la verdad sobre 49 mensajes era del 95%. El medidor te avisa, pero no te lo
   impide.
+- 🔴 **La métrica tiene un suelo, y es 1 dividido entre el número de mensajes.** La apertura se
+  calcula como «veces que se repite la más común, entre el total»: si las N aperturas son todas
+  distintas, la más común sale una vez y el resultado es 1/N, nunca cero. Con 10 mensajes el
+  mínimo posible es 10%, con 27 es 3,7% y con 100 es 1%.
+
+  Lo que eso implica en la práctica: **un lote pequeño no puede alcanzar la banda del 1-5%** que
+  aparece más abajo como sana, por perfecto que sea. Si mides 12 mensajes y te sale 8,3%, ese
+  número no dice que tu lote esté algo repetido: dice que solo tienes 12 mensajes. Compara
+  siempre contra el suelo de tu propio tamaño antes de contra el umbral.
 - **Los umbrales están calibrados sobre campañas en español.** En otro idioma, con otro modelo
   o con otro formato de mensaje hay que volver a medir antes de fiarse del 15%.
 - **El recorte de saludo está afinado para saludos en español e inglés.** Si tus mensajes

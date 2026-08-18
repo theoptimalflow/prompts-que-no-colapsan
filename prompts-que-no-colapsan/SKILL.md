@@ -18,7 +18,7 @@ estar mandando el mismo 47 veces. Toda esta skill existe para eso.
 
 ## Lee esto antes de escribir nada
 
-1. `references/colapso-de-plantilla.md`: los seis disfraces del fallo, con sus tasas medidas,
+1. `references/colapso-de-plantilla.md`: los seis disfraces del fallo, medidos sobre campañas reales,
    y la distinción entre restricciones positivas y negativas. **Vinculante.**
 2. `references/reglas-de-escritura.md`: las reglas que sobreviven a escala.
 3. `references/tu-contexto.md`: rellénalo con tu empresa y tu voz antes de la primera vez.

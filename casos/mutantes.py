@@ -46,6 +46,11 @@ MUTANTES = [
      r"(def pares_de_companeros\(filas\):)", r"\1\n    return 0, 0"),
     ("no avisa con menos de 8 mensajes",
      r"MINIMO_FIABLE = 8", "MINIMO_FIABLE = 0"),
+    # La nota de avisos se imprimia siempre en el camino verde, hablando de
+    # avisos que no estaban en pantalla. Este mutante deshace la guarda: si
+    # sobrevive, es que la suite ya no protege ese arreglo.
+    ("la nota de avisos vuelve a imprimirse siempre",
+     r"if motivos:", "if True:"),
 ]
 
 

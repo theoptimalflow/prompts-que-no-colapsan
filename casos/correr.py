@@ -44,6 +44,9 @@ CASOS = [
         "lote": "sano.csv",
         "exit": 0,
         "contiene": ["con la prueba de pares hecha"],
+        # Un lote limpio NO puede hablar de avisos: no hay ninguno en pantalla.
+        # Sin este no_contiene, quitar la guarda de la nota pasaba los 16 casos.
+        "no_contiene": ["informativo", "informativos"],
     },
     {
         "nombre": "los pares bloquean aunque la apertura pase",

@@ -63,8 +63,8 @@ Eso es lo que hace `mutantes.py`, y viaja con el repo:
 python3 casos/mutantes.py
 ```
 
-Rompe el medidor de ocho formas distintas, una por una, y exige que la suite **falle** con cada
-una. Los ocho:
+Rompe el medidor de 9 formas distintas, una por una, y exige que la suite **falle** con
+cada una. Las 9:
 
 | Qué se rompe |
 |---|
@@ -76,6 +76,7 @@ una. Los ocho:
 | el n-grama interno pasa a 1 |
 | los pares de compañeros no se calculan |
 | no avisa con menos de 8 mensajes |
+| la nota de avisos vuelve a imprimirse siempre |
 
-Tiene que decir **8/8 muertos**. Si alguno sobrevive, hay un fallo que tus tests no verían, y lo
-que importa es cuál: el propio script te lo nombra.
+Tiene que decir **9/9 muertos**. Si alguno sobrevive, hay un fallo que tus tests no
+verían, y lo que importa es cuál: el propio script te lo nombra.

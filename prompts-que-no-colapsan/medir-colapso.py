@@ -318,11 +318,18 @@ def main():
             print("  la prueba de pares, el próximo verde no va a valer gran cosa.")
     elif pares_medido:
         print("  VEREDICTO: el lote pasa el corte, con la prueba de pares hecha.")
-        # Solo si de verdad hay alguno. Antes se imprimia siempre, y en un lote
-        # limpio hablaba de avisos que no estaban en la pantalla.
-        if frac_ci >= UMBRAL_AVISO or frac_in >= UMBRAL_AVISO:
-            print("  Los avisos de arriba son informativos: un cierre es formulario")
-            print("  por naturaleza y un 4-grama repetido es lenguaje normal.")
+        # La nota nombra SOLO las metricas que han saltado de verdad. Antes se
+        # imprimia siempre, y luego explicaba las dos aunque solo saltara una:
+        # las dos veces hablaba de avisos que no estaban en la pantalla.
+        motivos = []
+        if frac_ci >= UMBRAL_AVISO:
+            motivos.append("un cierre es formulario por naturaleza")
+        if frac_in >= UMBRAL_AVISO:
+            motivos.append("un 4-grama repetido es lenguaje normal")
+        if motivos:
+            cabeza = ("El aviso de arriba es informativo" if len(motivos) == 1
+                      else "Los avisos de arriba son informativos")
+            print(f"  {cabeza}: {' y '.join(motivos)}.")
     else:
         print("  VEREDICTO PARCIAL: pasa el corte de apertura, pero SIN la prueba")
         print("  de pares de compañeros, que es la que más colapso destapa.")

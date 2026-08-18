@@ -10,7 +10,7 @@ de lanzar.
 ## 1. Qué hace
 
 - **`references/colapso-de-plantilla.md`**: los seis disfraces con los que este fallo aparece,
-  cada uno con su tasa medida, y la distinción que lo arregla de verdad.
+  medidos sobre campañas reales, y la distinción que lo arregla de verdad.
 - **`references/reglas-de-escritura.md`**: las reglas de redacción que sobreviven a escala.
 - **`medir-colapso.py`**: lee tus mensajes ya generados y te dice si el lote colapsó, con
   umbrales calibrados sobre 296 mensajes reales.
